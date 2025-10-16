@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="220" viewBox="0 0 640 220">
+  <style>
+    .word { font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; font-weight:700; fill:#1f3142; }
+  </style>
+  <text x="20" y="90" font-size="72" class="word">ClearPro</text>
+  <!-- smile dots -->
+  <g transform="translate(40,120)">
+    <circle cx="0" cy="30" r="12" fill="#bde9f5"/>
+    <circle cx="48" cy="22" r="16" fill="#a3e0f2"/>
+    <circle cx="100" cy="14" r="20" fill="#7ed0ea"/>
+    <circle cx="160" cy="10" r="24" fill="#4fc0e2"/>
+    <circle cx="224" cy="10" r="24" fill="#25a7d1"/>
+    <circle cx="286" cy="14" r="20" fill="#1c9ac7"/>
+    <circle cx="336" cy="22" r="16" fill="#118ab2"/>
+    <circle cx="380" cy="30" r="12" fill="#0e7aa3"/>
+  </g>
+</svg>
