@@ -1,0 +1,1519 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClearPro - Clinical Case Manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a5276;
+            --primary-dark: #154360;
+            --secondary: #2e86c1;
+            --accent: #3498db;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --gray: #7f8c8d;
+            --card-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+            --professional-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--professional-font);
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+        }
+
+        .logo-icon {
+            background: var(--primary);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .header-text h1 {
+            font-size: 1.3em;
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+
+        .header-text p {
+            font-size: 0.8em;
+            color: var(--gray);
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: var(--card-shadow);
+            border-left: 4px solid var(--primary);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title i {
+            color: var(--accent);
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--light);
+            color: var(--dark);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .icon-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* Clinical Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Aligner Sections */
+        .aligner-sections {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .aligner-section {
+            flex: 1;
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            border-top: 3px solid var(--accent);
+        }
+
+        .arch-title {
+            font-size: 1em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .aligner-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+            margin: 10px 0;
+        }
+
+        .aligner-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .small-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--light);
+            color: var(--dark);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .small-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* Progress */
+        .progress-container {
+            margin: 15px 0;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), var(--accent));
+            border-radius: 10px;
+            transition: width 0.8s ease;
+        }
+
+        /* Clinical Sections */
+        .clinical-section {
+            margin: 15px 0;
+        }
+
+        .section-title {
+            font-size: 1em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* IPR Tracking */
+        .ipr-list {
+            margin-top: 10px;
+        }
+
+        .ipr-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border-left: 3px solid var(--warning);
+        }
+
+        .ipr-teeth {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .ipr-details {
+            font-size: 0.85em;
+            color: var(--gray);
+        }
+
+        /* Appointment Card */
+        .appointment-card {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid var(--accent);
+        }
+
+        .appointment-date {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .appointment-time {
+            font-size: 0.9em;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+
+        .appointment-procedures {
+            margin: 10px 0;
+        }
+
+        .procedure-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        /* Progress Notes */
+        .notes-list {
+            margin-top: 10px;
+        }
+
+        .note-item {
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--success);
+        }
+
+        .note-date {
+            font-size: 0.8em;
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+
+        .note-content {
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        /* Photo Comparison Section */
+        .photo-comparison {
+            margin: 20px 0;
+        }
+
+        .comparison-tabs {
+            display: flex;
+            background: var(--light);
+            border-radius: 10px;
+            padding: 5px;
+            margin-bottom: 15px;
+        }
+
+        .comparison-tab {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .comparison-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .arch-comparison {
+            display: none;
+        }
+
+        .arch-comparison.active {
+            display: block;
+        }
+
+        .stage-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .stage-item {
+            text-align: center;
+        }
+
+        .stage-label {
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .stage-photo {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 10px;
+            background: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #dee2e6;
+            cursor: pointer;
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .stage-photo:hover {
+            border-color: var(--accent);
+        }
+
+        .stage-photo.has-image {
+            border: 2px solid var(--success);
+        }
+
+        .stage-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-placeholder {
+            color: var(--gray);
+            text-align: center;
+            padding: 10px;
+        }
+
+        .photo-icon {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        /* Timer */
+        .timer-section {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .timer {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 500px;
+            padding: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 0.8em;
+            transition: var(--transition);
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-icon {
+            font-size: 1.2em;
+            margin-bottom: 4px;
+        }
+
+        /* Main content padding for bottom nav */
+        .main-content {
+            padding-bottom: 70px;
+        }
+
+        /* Status Indicators */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .aligner-sections {
+                flex-direction: column;
+            }
+            
+            .timer {
+                font-size: 2em;
+            }
+            
+            .btn {
+                padding: 10px 15px;
+                font-size: 0.85em;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="header">
+            <img src="assets/clearpro-logo.svg" alt="ClearPro logo" style="height:45px; width:auto;">
+            <div class="header-text">
+                <h1>ClearPro</h1>
+                <p>Case: AJ-2024-028 | Emily Johnson | <span class="status-badge status-active">Active</span></p>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="dashboard-grid">
+                <!-- Left Column -->
+                <div>
+                    <!-- Current Aligner Status -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-teeth"></i>
+                                Current Aligner Status
+                            </h2>
+                            <button class="icon-btn" onclick="openModal('aligner-modal')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="aligner-sections">
+                            <div class="aligner-section">
+                                <div class="arch-title">Upper Arch</div>
+                                <div class="aligner-number" id="upper-aligner">12</div>
+                                <div class="aligner-controls">
+                                    <button class="small-btn" onclick="changeAligner('upper', -1)">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button class="small-btn" onclick="changeAligner('upper', 1)">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="progress-info">
+                                    <span>Progress</span>
+                                    <span id="upper-progress">43%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="aligner-section">
+                                <div class="arch-title">Lower Arch</div>
+                                <div class="aligner-number" id="lower-aligner">12</div>
+                                <div class="aligner-controls">
+                                    <button class="small-btn" onclick="changeAligner('lower', -1)">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button class="small-btn" onclick="changeAligner('lower', 1)">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="progress-info">
+                                    <span>Progress</span>
+                                    <span id="lower-progress">43%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-container">
+                            <div class="progress-info">
+                                <span>Overall Treatment Progress</span>
+                                <span id="progress-percent">42%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="treatment-progress" style="width: 42%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Next Appointment -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-calendar-check"></i>
+                                Next Appointment
+                            </h2>
+                            <button class="icon-btn" onclick="openModal('appointment-modal')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="appointment-card">
+                            <div class="appointment-date">April 12, 2024</div>
+                            <div class="appointment-time">10:30 AM - 11:00 AM</div>
+                            <div class="section-title">
+                                <i class="fas fa-list-ul"></i>
+                                Planned Procedures
+                            </div>
+                            <div class="appointment-procedures">
+                                <div class="procedure-item">
+                                    <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                                    <span>Progress evaluation</span>
+                                </div>
+                                <div class="procedure-item">
+                                    <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                                    <span>Aligner #18 delivery</span>
+                                </div>
+                                <div class="procedure-item">
+                                    <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                                    <span>IPR if needed</span>
+                                </div>
+                            </div>
+                            <div class="btn-group" style="justify-content: flex-start; margin-top: 15px;">
+                                <button class="btn btn-outline" onclick="rescheduleAppointment()">
+                                    <i class="fas fa-calendar-alt"></i> Reschedule
+                                </button>
+                                <button class="btn btn-primary" onclick="confirmAppointment()">
+                                    <i class="fas fa-check"></i> Confirm
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- IPR Tracking -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-file-medical"></i>
+                                IPR Procedures
+                            </h2>
+                            <button class="icon-btn" onclick="openModal('ipr-modal')">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="clinical-section">
+                            <div class="ipr-list" id="ipr-list">
+                                <div class="ipr-item">
+                                    <div>
+                                        <div class="ipr-teeth">Teeth #14-15</div>
+                                        <div class="ipr-details">0.3mm | Feb 28, 2024</div>
+                                    </div>
+                                    <div class="status-badge status-completed">Completed</div>
+                                </div>
+                                <div class="ipr-item">
+                                    <div>
+                                        <div class="ipr-teeth">Teeth #24-25</div>
+                                        <div class="ipr-details">0.2mm | Mar 15, 2024</div>
+                                    </div>
+                                    <div class="status-badge status-completed">Completed</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div>
+                    <!-- Photo Comparison Section -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-camera"></i>
+                                Progress Comparison
+                            </h2>
+                            <button class="icon-btn" onclick="openModal('comparison-modal')">
+                                <i class="fas fa-sliders-h"></i>
+                            </button>
+                        </div>
+
+                        <div class="photo-comparison">
+                            <div class="comparison-tabs">
+                                <div class="comparison-tab active" onclick="switchArch('upper')">Upper Arch</div>
+                                <div class="comparison-tab" onclick="switchArch('lower')">Lower Arch</div>
+                            </div>
+
+                            <!-- Upper Arch Comparison -->
+                            <div class="arch-comparison active" id="upper-arch-comparison">
+                                <div class="stage-grid">
+                                    <div class="stage-item">
+                                        <div class="stage-label">Initial</div>
+                                        <div class="stage-photo" onclick="openPhotoUpload('upper', 'initial')" id="upper-initial-photo">
+                                            <div class="photo-placeholder">
+                                                <div class="photo-icon">
+                                                    <i class="fas fa-camera"></i>
+                                                </div>
+                                                <div>Add Photo</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="stage-item">
+                                        <div class="stage-label">Current</div>
+                                        <div class="stage-photo" onclick="openPhotoUpload('upper', 'current')" id="upper-current-photo">
+                                            <div class="photo-placeholder">
+                                                <div class="photo-icon">
+                                                    <i class="fas fa-camera"></i>
+                                                </div>
+                                                <div>Add Photo</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="stage-item">
+                                        <div class="stage-label">Final</div>
+                                        <div class="stage-photo" onclick="openPhotoUpload('upper', 'final')" id="upper-final-photo">
+                                            <div class="photo-placeholder">
+                                                <div class="photo-icon">
+                                                    <i class="fas fa-camera"></i>
+                                                </div>
+                                                <div>Add Photo</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Lower Arch Comparison -->
+                            <div class="arch-comparison" id="lower-arch-comparison">
+                                <div class="stage-grid">
+                                    <div class="stage-item">
+                                        <div class="stage-label">Initial</div>
+                                        <div class="stage-photo" onclick="openPhotoUpload('lower', 'initial')" id="lower-initial-photo">
+                                            <div class="photo-placeholder">
+                                                <div class="photo-icon">
+                                                    <i class="fas fa-camera"></i>
+                                                </div>
+                                                <div>Add Photo</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="stage-item">
+                                        <div class="stage-label">Current</div>
+                                        <div class="stage-photo" onclick="openPhotoUpload('lower', 'current')" id="lower-current-photo">
+                                            <div class="photo-placeholder">
+                                                <div class="photo-icon">
+                                                    <i class="fas fa-camera"></i>
+                                                </div>
+                                                <div>Add Photo</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="stage-item">
+                                        <div class="stage-label">Final</div>
+                                        <div class="stage-photo" onclick="openPhotoUpload('lower', 'final')" id="lower-final-photo">
+                                            <div class="photo-placeholder">
+                                                <div class="photo-icon">
+                                                    <i class="fas fa-camera"></i>
+                                                </div>
+                                                <div>Add Photo</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wear Time Tracker -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-clock"></i>
+                                Wear Time Tracker
+                            </h2>
+                            <button class="icon-btn">
+                                <i class="fas fa-chart-line"></i>
+                            </button>
+                        </div>
+                        <div class="timer-section">
+                            <div class="wear-time-display">
+                                <p>Today's Wear Time: <strong id="today-wear-time">04:32</strong></p>
+                                <p>Weekly Average: <strong>21.4 hrs/day</strong></p>
+                            </div>
+                            <div class="timer" id="current-timer">00:00:00</div>
+                            <div class="btn-group">
+                                <button class="btn btn-success" onclick="startTimer()">
+                                    <i class="fas fa-play"></i> Start
+                                </button>
+                                <button class="btn btn-warning" onclick="pauseTimer()">
+                                    <i class="fas fa-pause"></i> Pause
+                                </button>
+                                <button class="btn btn-danger" onclick="resetTimer()">
+                                    <i class="fas fa-stop"></i> Reset
+                                </button>
+                            </div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-info">
+                                <span>Daily Goal Progress (22 hrs)</span>
+                                <span>68%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 68%; background: linear-gradient(90deg, var(--success), #2ecc71);"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clinical Progress Notes -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-sticky-note"></i>
+                                Clinical Notes
+                            </h2>
+                            <button class="icon-btn" onclick="openModal('notes-modal')">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="clinical-section">
+                            <div class="notes-list" id="notes-list">
+                                <div class="note-item">
+                                    <div class="note-date">March 15, 2024 | Dr. Wilson</div>
+                                    <div class="note-content">Good progress with arch expansion. Mid-treatment evaluation shows proper tracking. Continue with aligner #12 for 7 days.</div>
+                                </div>
+                                <div class="note-item">
+                                    <div class="note-date">February 28, 2024 | Dr. Wilson</div>
+                                    <div class="note-content">IPR performed on upper right quadrant. Patient tolerating treatment well. Compliance at 92%.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="#" class="nav-item active">
+                <i class="fas fa-home nav-icon"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-camera nav-icon"></i>
+                <span>Photos</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-calendar-alt nav-icon"></i>
+                <span>Calendar</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-chart-line nav-icon"></i>
+                <span>Reports</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Aligner Update Modal -->
+    <div class="modal" id="aligner-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Update Aligner Numbers</h2>
+                <button class="close-modal" onclick="closeModal('aligner-modal')">&times;</button>
+            </div>
+            <form id="aligner-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Upper Aligner</label>
+                        <input type="number" class="form-control" id="modal-upper-aligner" value="12" min="1" max="50">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Lower Aligner</label>
+                        <input type="number" class="form-control" id="modal-lower-aligner" value="12" min="1" max="50">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Total Aligners (Upper)</label>
+                        <input type="number" class="form-control" id="modal-total-upper" value="28" min="1" max="100">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Total Aligners (Lower)</label>
+                        <input type="number" class="form-control" id="modal-total-lower" value="28" min="1" max="100">
+                    </div>
+                </div>
+                <div class="btn-group" style="justify-content: flex-end; margin-top: 20px;">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('aligner-modal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- IPR Modal -->
+    <div class="modal" id="ipr-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Add IPR Procedure</h2>
+                <button class="close-modal" onclick="closeModal('ipr-modal')">&times;</button>
+            </div>
+            <form id="ipr-form">
+                <div class="form-group">
+                    <label class="form-label">Teeth Numbers</label>
+                    <input type="text" class="form-control" id="ipr-teeth" placeholder="e.g., 14-15 or 24,25,26">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Amount (mm)</label>
+                        <input type="number" class="form-control" id="ipr-amount" step="0.1" min="0.1" max="1.0" value="0.2">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-control" id="ipr-date">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Notes</label>
+                    <textarea class="form-control" id="ipr-notes" rows="3" placeholder="Additional notes about the IPR procedure..."></textarea>
+                </div>
+                <div class="btn-group" style="justify-content: flex-end; margin-top: 20px;">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('ipr-modal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save IPR Record</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Appointment Modal -->
+    <div class="modal" id="appointment-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Schedule Appointment</h2>
+                <button class="close-modal" onclick="closeModal('appointment-modal')">&times;</button>
+            </div>
+            <form id="appointment-form">
+                <div class="form-group">
+                    <label class="form-label">Date</label>
+                    <input type="date" class="form-control" id="appointment-date">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Start Time</label>
+                        <input type="time" class="form-control" id="appointment-start">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">End Time</label>
+                        <input type="time" class="form-control" id="appointment-end">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Procedures</label>
+                    <textarea class="form-control" id="appointment-procedures" rows="3" placeholder="List planned procedures..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Notes</label>
+                    <textarea class="form-control" id="appointment-notes" rows="2" placeholder="Additional appointment notes..."></textarea>
+                </div>
+                <div class="btn-group" style="justify-content: flex-end; margin-top: 20px;">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('appointment-modal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Appointment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Clinical Notes Modal -->
+    <div class="modal" id="notes-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Add Clinical Note</h2>
+                <button class="close-modal" onclick="closeModal('notes-modal')">&times;</button>
+            </div>
+            <form id="notes-form">
+                <div class="form-group">
+                    <label class="form-label">Date</label>
+                    <input type="date" class="form-control" id="note-date">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Clinician</label>
+                    <input type="text" class="form-control" id="note-clinician" value="Dr. Wilson">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Note</label>
+                    <textarea class="form-control" id="note-content" rows="5" placeholder="Enter clinical notes..."></textarea>
+                </div>
+                <div class="btn-group" style="justify-content: flex-end; margin-top: 20px;">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('notes-modal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Note</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let timerInterval;
+        let seconds = 0;
+        let isTimerRunning = false;
+        let upperAligner = 12;
+        let lowerAligner = 12;
+        let totalUpperAligners = 28;
+        let totalLowerAligners = 28;
+        let currentArch = 'upper';
+        let currentStage = 'initial';
+        let currentPhotoData = null;
+
+        // Initialize the app
+        function initApp() {
+            updateProgress();
+            loadTimerState();
+            setupEventListeners();
+            loadSavedPhotos();
+            loadClinicalData();
+            
+            // Set current date for forms
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('ipr-date').value = today;
+            document.getElementById('appointment-date').value = today;
+            document.getElementById('note-date').value = today;
+        }
+
+        // Timer functions
+        function startTimer() {
+            if (!isTimerRunning) {
+                isTimerRunning = true;
+                timerInterval = setInterval(() => {
+                    seconds++;
+                    updateTimerDisplay();
+                    updateDailyWearTime();
+                }, 1000);
+            }
+        }
+
+        function pauseTimer() {
+            isTimerRunning = false;
+            clearInterval(timerInterval);
+            saveTimerState();
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            seconds = 0;
+            updateTimerDisplay();
+            saveTimerState();
+        }
+
+        function updateTimerDisplay() {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            
+            document.getElementById('current-timer').textContent = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function updateDailyWearTime() {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            
+            document.getElementById('today-wear-time').textContent = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        }
+
+        // Aligner management
+        function changeAligner(arch, change) {
+            if (arch === 'upper') {
+                upperAligner = Math.max(1, Math.min(totalUpperAligners, upperAligner + change));
+                document.getElementById('upper-aligner').textContent = upperAligner;
+            } else {
+                lowerAligner = Math.max(1, Math.min(totalLowerAligners, lowerAligner + change));
+                document.getElementById('lower-aligner').textContent = lowerAligner;
+            }
+            updateProgress();
+            saveAligners();
+        }
+
+        function updateProgress() {
+            // Calculate progress based on both arches
+            const upperProgress = (upperAligner / totalUpperAligners) * 100;
+            const lowerProgress = (lowerAligner / totalLowerAligners) * 100;
+            const overallProgress = (upperProgress + lowerProgress) / 2;
+            
+            document.getElementById('treatment-progress').style.width = `${overallProgress}%`;
+            document.getElementById('progress-percent').textContent = `${Math.round(overallProgress)}%`;
+            document.getElementById('upper-progress').textContent = `${Math.round(upperProgress)}%`;
+            document.getElementById('lower-progress').textContent = `${Math.round(lowerProgress)}%`;
+        }
+
+        // Appointment functions
+        function rescheduleAppointment() {
+            openModal('appointment-modal');
+        }
+
+        function confirmAppointment() {
+            alert('Appointment confirmed! Reminder set.');
+        }
+
+        // Photo comparison functions
+        function switchArch(arch) {
+            // Update tabs
+            document.querySelectorAll('.comparison-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update content
+            document.querySelectorAll('.arch-comparison').forEach(comp => {
+                comp.classList.remove('active');
+            });
+            document.getElementById(`${arch}-arch-comparison`).classList.add('active');
+            
+            currentArch = arch;
+        }
+
+        function openPhotoUpload(arch, stage) {
+            currentArch = arch;
+            currentStage = stage;
+            
+            // In a real app, this would open the photo upload modal
+            alert(`In the full app, this would open camera/gallery for ${arch} arch ${stage} stage`);
+        }
+
+        // Clinical data management
+        function loadClinicalData() {
+            // Load IPR records
+            const iprRecords = JSON.parse(localStorage.getItem('iprRecords') || '[]');
+            if (iprRecords.length > 0) {
+                displayIPRRecords(iprRecords);
+            }
+            
+            // Load clinical notes
+            const clinicalNotes = JSON.parse(localStorage.getItem('clinicalNotes') || '[]');
+            if (clinicalNotes.length > 0) {
+                displayClinicalNotes(clinicalNotes);
+            }
+        }
+
+        function displayIPRRecords(records) {
+            const iprList = document.getElementById('ipr-list');
+            iprList.innerHTML = '';
+            
+            records.forEach(record => {
+                const iprItem = document.createElement('div');
+                iprItem.className = 'ipr-item';
+                iprItem.innerHTML = `
+                    <div>
+                        <div class="ipr-teeth">Teeth #${record.teeth}</div>
+                        <div class="ipr-details">${record.amount}mm | ${record.date}</div>
+                    </div>
+                    <div class="status-badge status-completed">Completed</div>
+                `;
+                iprList.appendChild(iprItem);
+            });
+        }
+
+        function displayClinicalNotes(notes) {
+            const notesList = document.getElementById('notes-list');
+            notesList.innerHTML = '';
+            
+            notes.forEach(note => {
+                const noteItem = document.createElement('div');
+                noteItem.className = 'note-item';
+                noteItem.innerHTML = `
+                    <div class="note-date">${note.date} | ${note.clinician}</div>
+                    <div class="note-content">${note.content}</div>
+                `;
+                notesList.appendChild(noteItem);
+            });
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Local storage functions
+        function saveTimerState() {
+            const timerState = {
+                seconds: seconds,
+                isTimerRunning: isTimerRunning,
+                lastUpdate: new Date().toISOString()
+            };
+            localStorage.setItem('alignerTimer', JSON.stringify(timerState));
+        }
+
+        function loadTimerState() {
+            const saved = localStorage.getItem('alignerTimer');
+            if (saved) {
+                const timerState = JSON.parse(saved);
+                seconds = timerState.seconds;
+                updateTimerDisplay();
+                updateDailyWearTime();
+                
+                // Check if we should continue timing (within the same day)
+                const lastUpdate = new Date(timerState.lastUpdate);
+                const now = new Date();
+                if (timerState.isTimerRunning && 
+                    lastUpdate.getDate() === now.getDate() &&
+                    lastUpdate.getMonth() === now.getMonth() &&
+                    lastUpdate.getFullYear() === now.getFullYear()) {
+                    startTimer();
+                }
+            }
+        }
+
+        function saveAligners() {
+            const alignerData = {
+                upper: upperAligner,
+                lower: lowerAligner,
+                totalUpper: totalUpperAligners,
+                totalLower: totalLowerAligners
+            };
+            localStorage.setItem('alignerData', JSON.stringify(alignerData));
+        }
+
+        function loadAligners() {
+            const saved = localStorage.getItem('alignerData');
+            if (saved) {
+                const alignerData = JSON.parse(saved);
+                upperAligner = alignerData.upper;
+                lowerAligner = alignerData.lower;
+                totalUpperAligners = alignerData.totalUpper;
+                totalLowerAligners = alignerData.totalLower;
+                
+                document.getElementById('upper-aligner').textContent = upperAligner;
+                document.getElementById('lower-aligner').textContent = lowerAligner;
+                updateProgress();
+            }
+        }
+
+        function loadSavedPhotos() {
+            // This would load saved photos in a real app
+        }
+
+        // Event listeners
+        function setupEventListeners() {
+            // Aligner form submission
+            document.getElementById('aligner-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                upperAligner = parseInt(document.getElementById('modal-upper-aligner').value);
+                lowerAligner = parseInt(document.getElementById('modal-lower-aligner').value);
+                totalUpperAligners = parseInt(document.getElementById('modal-total-upper').value);
+                totalLowerAligners = parseInt(document.getElementById('modal-total-lower').value);
+                
+                document.getElementById('upper-aligner').textContent = upperAligner;
+                document.getElementById('lower-aligner').textContent = lowerAligner;
+                updateProgress();
+                saveAligners();
+                closeModal('aligner-modal');
+            });
+
+            // IPR form submission
+            document.getElementById('ipr-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const iprRecord = {
+                    teeth: document.getElementById('ipr-teeth').value,
+                    amount: document.getElementById('ipr-amount').value,
+                    date: document.getElementById('ipr-date').value,
+                    notes: document.getElementById('ipr-notes').value
+                };
+                
+                // Save to localStorage
+                await API.addIPR(iprRecord);
+                const iprRecords = await API.getIPR();
+                // Update display
+                displayIPRRecords(iprRecords);
+                closeModal('ipr-modal');
+                
+                // Reset form
+                document.getElementById('ipr-form').reset();
+            });
+
+            // Appointment form submission
+            document.getElementById('appointment-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                await API.addAppointment({
+                    date: document.getElementById('appointment-date').value,
+                    start: document.getElementById('appointment-start').value,
+                    end: document.getElementById('appointment-end').value,
+                    procedures: document.getElementById('appointment-procedures').value,
+                    notes: document.getElementById('appointment-notes').value,
+                });
+                alert('Appointment saved successfully!');
+                closeModal('appointment-modal');
+            });
+
+            // Clinical notes form submission
+            document.getElementById('notes-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const clinicalNote = {
+                    date: document.getElementById('note-date').value,
+                    clinician: document.getElementById('note-clinician').value,
+                    content: document.getElementById('note-content').value
+                };
+                
+                // Save to localStorage
+                await API.addNote(clinicalNote);
+                const clinicalNotes = await API.getNotes();
+                
+                // Update display
+                displayClinicalNotes(clinicalNotes);
+                closeModal('notes-modal');
+                
+                // Reset form
+                document.getElementById('notes-form').reset();
+            });
+
+            // Close modal when clicking outside
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Save state periodically
+        setInterval(saveTimerState, 30000);
+
+        
+// === ClearPro Backend API helpers ===
+const API = {
+  async getAligners(){ try{ const r = await fetch('/api/aligners'); return await r.json(); }catch(e){ console.error(e); return null; } },
+  async saveAligners(payload){ try{ const r = await fetch('/api/aligners',{method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)}); return await r.json(); }catch(e){ console.error(e); } },
+  async getIPR(){ const r = await fetch('/api/ipr'); return r.json(); },
+  async addIPR(rec){ const r = await fetch('/api/ipr',{method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(rec)}); return r.json(); },
+  async getNotes(){ const r = await fetch('/api/notes'); return r.json(); },
+  async addNote(note){ const r = await fetch('/api/notes',{method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(note)}); return r.json(); },
+  async getAppointments(){ const r = await fetch('/api/appointments'); return r.json(); },
+  async addAppointment(appt){ const r = await fetch('/api/appointments',{method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(appt)}); return r.json(); },
+};
+
+// Override local save/load with backend versions where reasonable
+async function loadAligners(){
+  try{
+    const data = await API.getAligners();
+    if(data && (data.upperAligner || data.lowerAligner)){
+      upperAligner = data.upperAligner ?? upperAligner;
+      lowerAligner = data.lowerAligner ?? lowerAligner;
+      totalUpperAligners = data.totalUpperAligners ?? totalUpperAligners;
+      totalLowerAligners = data.totalLowerAligners ?? totalLowerAligners;
+      document.getElementById('upper-aligner').textContent = upperAligner;
+      document.getElementById('lower-aligner').textContent = lowerAligner;
+      updateProgress();
+    }
+  }catch(e){ console.warn('Using local aligner state'); }
+}
+
+async function saveAligners(){
+  const payload = {
+    upperAligner, lowerAligner, totalUpperAligners, totalLowerAligners
+  };
+  API.saveAligners(payload);
+}
+
+async function loadClinicalData(){
+  try{
+    const iprRecords = await API.getIPR();
+    if (Array.isArray(iprRecords)) displayIPRRecords(iprRecords);
+  }catch(e){ console.error(e); }
+
+  try{
+    const notes = await API.getNotes();
+    if (Array.isArray(notes)) displayClinicalNotes(notes);
+  }catch(e){ console.error(e); }
+}
+
+// Initialize app when page loads
+        window.onload = function() {
+            initApp();
+            loadAligners();
+        };
+    </script>
+</body>
+</html>
